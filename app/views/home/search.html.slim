@@ -1,0 +1,21 @@
+= form_tag '/search', method: 'GET' do
+  = text_field_tag :query, params[:query]
+  = submit_tag 'Search'
+
+- if @searching.present?
+  .search_resulting
+    p 
+      | 
+      - @searching.results.each do |result|
+        .search_result
+          h3= result[:hint][:title]
+          p= result[:hint][:preview]
+          br
+          small= result[:hint][:type]
+          br
+
+  .search_paging
+    = will_paginate @searching.raw_data
+
+- unless @searching.present?
+  p Not found 
